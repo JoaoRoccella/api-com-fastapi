@@ -2,5 +2,8 @@
 __pycache__/
 .venv/
 
-#VS Code
+# VS Code
 .vscode/
+
+# Variáveis de ambiente
+*.env
