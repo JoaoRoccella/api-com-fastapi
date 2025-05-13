@@ -1,8 +1,8 @@
 from typing import Union
 from fastapi import FastAPI
+from routes.atores import router as atores_router
+from routes.series import router as series_router
 
-# Documentação oficial: https://fastapi.tiangolo.com/
-# Tarefa: https://gist.github.com/a698548559aaca644e9ebe11b8de81ca.git
 
 app = FastAPI()
 
