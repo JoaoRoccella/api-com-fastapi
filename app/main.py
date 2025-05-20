@@ -1,15 +1,10 @@
-from typing import Union
 from fastapi import FastAPI
 from routes.atores import router as atores_router
 from routes.series import router as series_router
-
+from routes.categorias import router as categorias_router
 
 app = FastAPI()
 
-@app.get('/')
-def read_hello():
-    return {"Hello": "World"}
-
-@app.get('/items/{item_id}/{query}')
-def read_item(item_id: int, query: Union[str, None] = None):
-    return {"item_id": item_id, "query": query}
+app.include_router(atores_router)
+app.include_router(series_router)
+app.include_router(categorias_router)
