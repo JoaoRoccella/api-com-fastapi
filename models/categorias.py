@@ -8,7 +8,7 @@ class Categoria(BaseModel):
     id: Optional[int] = Field(None, title="ID da categoria", description="ID da categoria")
     nome: str = Field(..., title="Nome da categoria", description="Nome da categoria")
 
-    def salvarCategoria(self) -> Optional['Categoria']:
+    def salvar_categoria(self) -> Optional['Categoria']:
         """Método para salvar a categoria no banco de dados."""
         try:
             with Database() as db:
@@ -23,7 +23,7 @@ class Categoria(BaseModel):
         
         return self
     
-    def buscarIDCategoriaPorNome(self) -> Optional[int]:
+    def buscar_id_categoria_por_nome(self) -> Optional[int]:
         """Método para buscar o ID da categoria no banco de dados."""
         try:
             with Database() as db:
@@ -35,15 +35,15 @@ class Categoria(BaseModel):
                 if resultado:
                     return resultado[0]['id_categoria']
                 else:
-                    self.salvarCategoria()
-                    return self.buscarIDCategoriaPorNome()
+                    self.salvar_categoria()
+                    return self.buscar_id_categoria_por_nome()
         
         except Exception as e:
             raise e
         
     
     @staticmethod
-    def buscarNomeCategoriaPorID(id_categoria: int) -> Optional[str]:
+    def buscar_nome_categoria_por_id(id_categoria: int) -> Optional[str]:
         """Busca o nome da categoria dado um ID."""
         
         try:

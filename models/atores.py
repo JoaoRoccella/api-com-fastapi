@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, OrderedDict
 from models.database import Database
 
 class Ator(BaseModel):
@@ -8,7 +8,16 @@ class Ator(BaseModel):
     id: Optional[int] = Field(None, title="ID do ator", description="ID do ator")
     nome: str = Field(..., title="Nome do ator", description="Nome do ator")
 
-    def salvarAtor(self) -> Optional['Ator']:
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "id": 0,
+                "nome": "Robert Downey Jr.",
+            }
+        }
+    }
+
+    def salvar_ator(self) -> Optional['Ator']:
         """Método para salvar o ator no banco de dados."""
         # Aqui você deve implementar a lógica para salvar o ator no banco de dados
         # Exemplo: db.add(self)

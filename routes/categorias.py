@@ -8,7 +8,7 @@ router = APIRouter(prefix="/categorias", tags=["Categorias"])
 async def criar_categoria(categoria: Categoria) -> Optional[Categoria]:
     """Cria uma nova categoria."""
     try:
-        if categoria.salvarCategoria():
+        if categoria.salvar_categoria():
             return categoria
         else:
             raise HTTPException(status_code=500, detail="Erro ao salvar a categoria.")
