@@ -13,7 +13,7 @@ class Database:
         self.password: str = getenv('DB_PSWD')
         self.database: str = getenv('DB_NAME')
         self.connection: Optional[MySQLConnection] = None 
-        self.cursor: Optional[List[dict]]= None 
+        self.cursor: Optional[List[dict]] = None 
 
     
     def __enter__(self) -> 'Database':

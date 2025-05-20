@@ -2,6 +2,12 @@ CREATE DATABASE IF NOT EXISTS `mustwatch` DEFAULT CHARACTER SET utf8mb4 COLLATE 
 
 USE `mustwatch`;
 
+CREATE TABLE IF NOT EXISTS `categoria` (
+    `id_categoria` TINYINT(3) NOT NULL AUTO_INCREMENT,
+    `nome` VARCHAR(50) NOT NULL,
+    PRIMARY KEY (`id_categoria`)
+);
+
 CREATE TABLE IF NOT EXISTS `serie` (
     `id_serie` INT(11) NOT NULL AUTO_INCREMENT,
     `titulo` VARCHAR(100) NOT NULL,
@@ -12,11 +18,7 @@ CREATE TABLE IF NOT EXISTS `serie` (
     CONSTRAINT `fk_categoria_serie` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`)
 );
 
-CREATE TABLE IF NOT EXISTS `categoria` (
-    `id_categoria` TINYINT(3) NOT NULL AUTO_INCREMENT,
-    `nome` VARCHAR(50) NOT NULL,
-    PRIMARY KEY (`id_categoria`)
-);
+
 
 CREATE TABLE IF NOT EXISTS `ator` (
     `id_ator` INT(11) NOT NULL AUTO_INCREMENT,

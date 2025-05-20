@@ -4,6 +4,58 @@ from models.atores import Ator
 
 router = APIRouter(prefix="/atores", tags=["Atores"])
 
+""" @router.get(
+    path="/",
+     """
+
+@router.get(
+    path="/{id_ator}", 
+    response_model=Ator, 
+    summary="Buscar ator pelo ID", 
+    description="Busca um ator pelo ID no banco de dados.",
+    status_code=200,
+    response_description="Ator encontrado com sucesso.",
+    responses={
+        200: {
+            "description": "Ator encontrado com sucesso.",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "id": 123,
+                        "nome": "Robert Downey Jr."
+                    }
+                }
+            },
+        },
+        404: {
+            "description": "Ator não encontrado",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Ator não encontrado."}
+                }
+            }
+        },
+        500: {
+            "description": "Erro interno do servidor",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Erro ao buscar o ator no banco de dados."}
+                }
+            }
+        }
+    }
+)
+async def buscar_ator(id_ator: int) -> Optional[Ator]:
+    """Busca um ator pelo ID."""
+    try:
+        ator = Ator().buscar_ator_pelo_id(id_ator)
+        if ator:
+            return ator
+        else:
+            raise HTTPException(status_code=404, detail="Ator não encontrado.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.post(
     path="/", 
     response_model=Ator, 
