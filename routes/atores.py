@@ -1,12 +1,63 @@
-from typing import Optional
+from typing import Optional, List
 from fastapi import APIRouter, HTTPException
 from models.atores import Ator
 
 router = APIRouter(prefix="/atores", tags=["Atores"])
 
-""" @router.get(
+@router.get(
     path="/",
-     """
+    response_model=List[Ator],
+    summary="Listar todos os atores",
+    description="Retorna uma lista de todos os atores cadastrados no banco de dados.",
+    status_code=200,
+    response_description="Lista de atores encontrada com sucesso.",
+    responses={
+        200: {
+            "description": "Lista de atores encontrada com sucesso.",
+            "content": {
+                "application/json": {
+                    "example": [
+                        {
+                            "id_ator": 123,
+                            "nome": "Robert Downey Jr."
+                        },
+                        {
+                            "id_ator": 456,
+                            "nome": "Chris Evans"
+                        }
+                    ]
+                }
+            },
+        },
+        404: {
+            "description": "Erro de requisição",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Nenhum ator encontrado."}
+                }
+            }
+        },
+        500: {
+            "description": "Erro interno do servidor",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Erro ao buscar os atores no banco de dados."}
+                }
+            }
+        }
+    }
+)
+async def listar_atores() -> List['Ator']:
+    """Lista todos os atores cadastrados no banco de dados."""
+    try:
+        atores = Ator().buscar_atores()
+        if atores:
+            return atores
+        else:
+            raise HTTPException(status_code=404, detail="Nenhum ator encontrado.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
 
 @router.get(
     path="/{id_ator}", 
@@ -21,7 +72,7 @@ router = APIRouter(prefix="/atores", tags=["Atores"])
             "content": {
                 "application/json": {
                     "example": {
-                        "id": 123,
+                        "id_ator": 123,
                         "nome": "Robert Downey Jr."
                     }
                 }
@@ -69,7 +120,7 @@ async def buscar_ator(id_ator: int) -> Optional[Ator]:
             "content": {
                 "application/json": {
                     "example": {
-                        "id": 123,
+                        "id_ator": 123,
                         "nome": "Robert Downey Jr."
                     }
                 }

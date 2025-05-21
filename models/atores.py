@@ -1,17 +1,17 @@
 from pydantic import BaseModel, Field
-from typing import Optional, OrderedDict
+from typing import Optional, List
 from models.database import Database
 
 class Ator(BaseModel):
     """Classe que representa um ator."""
     
     id_ator: Optional[int] = Field(None, title="ID do ator", description="ID do ator")
-    nome: str = Field(..., title="Nome do ator", description="Nome do ator")
+    nome: Optional[str] = Field(None, title="Nome do ator", description="Nome do ator")
 
     model_config = {
         "json_schema_extra": {
             "example": {
-                "id": 0,
+                "id_ator": 0,
                 "nome": "Robert Downey Jr.",
             }
         }
@@ -19,8 +19,6 @@ class Ator(BaseModel):
 
     def salvar_ator(self) -> Optional['Ator']:
         """Método para salvar o ator no banco de dados."""
-        # Aqui você deve implementar a lógica para salvar o ator no banco de dados
-        # Exemplo: db.add(self)
         
         try:
             with Database() as db:
@@ -42,9 +40,9 @@ class Ator(BaseModel):
         
         try:
             with Database() as db:
-                sql = "SELECT * FROM ator WHERE id = %s"
+                sql = "SELECT * FROM ator WHERE id_ator = %s"
                 params = (id,)
-                result = db.buscar(sql, params)
+                result = db.executar(sql, params)
                 
                 if result:
                     return Ator(**result[0])
@@ -56,4 +54,15 @@ class Ator(BaseModel):
             return None
             
         
-    
+    @staticmethod
+    def buscar_atores() -> Optional[List['Ator']]:
+        """Método para buscar todos os atores."""
+        
+        try:
+            with Database() as db:
+                sql = "SELECT * FROM ator"
+                result = db.executar(sql)
+                return result if result else None
+        except Exception as e:
+            print(f'Erro ao buscar os atores: {e}')
+            return None
